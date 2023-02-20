@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <!--Font Awesome icons-->
+    <script src="https://kit.fontawesome.com/0a25acb423.js" crossorigin="anonymous"></script>
+    <title>Kid Calc</title>
+</head>
+<body>
+    <header>
+        <h2 class="logo">Kid Calc</h2>
+        <nav id="nav">
+            <ul>
+                <li><a href="/assets/html/howToUse.html">How to use ?</a></li>
+                <li><button id="logout">Log out</button></li>
+                <li><button id="themeSettings"><i class="fa-solid fa-gear"></i>Themes</button></li>
+                <li><button class="userNameOutput" id="updateUserData"><i class="fa-solid fa-gear"></i></button></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="singIn flexRow">
+            <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
+            <form class="signInForm flexColumn">
+                <h2 class="main-title">Sign in</h2>
+                <div class="form flexRow">
+                    <div class="lables flexColumn2">
+                        <h3>User name</h3>
+                        <h3>Email</h3>
+                        <h3>Age</h3>
+                        <h3>Choose theme</h3>
+                        <h3>Password</h3><br>
+                    </div>
+                    <div class="inputs flexColumn2">
+                        <input type="text" name="userName" id="singUserName" placeholder="Write your name">
+                        <div class="signEmail">
+                            <input type="email" name="userEmail" id="signEmail" placeholder="Write your email">
+                        </div>
+                        <div class="signAge">
+                            <input id="signAge" name="userAge" type="number" min="1" max="200" placeholder="Age">
+                        </div>
+                        <select name="userFavoriteTheme" id="selectedTheme">
+                            <option value="Pharaohs">Pharaohs</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Space">Space</option>
+                        </select>
+                        <div class="singPassword flexRow">
+                            <input type="password"id="singPassword" name="userPassword" placeholder="Write strong password">
+                            <i class="icon fa-solid fa-eye" id="singPasswordImg"></i>
+                        </div>
+                        <div class="singPassword flexRow">
+                            <input type="password"id="singPasswordAgain" placeholder="Write your password again">
+                            <i class="icon fa-solid fa-eye " id="singPasswordAgainImg"></i>
+                        </div>
+                    </div>
+                </div>
+                <button type="#" id="singInBtn" class="submitBtn">Sing in</button>
+                <p id="emailUsed" class="hidden">Your email was using</p>
+                <a href="#" class="toLoginSection"><p id="toLoginSection">If you already have an account</p></a>
+            </form>
+        </section>
+        <section class="logIn flexRow">
+            <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
+            <form class="logInForm flexColumn">
+                <h2 class="main-title">Log in</h2>
+                <div class="loginEmail flaxColumn">
+                    <h3>Email</h3>
+                    <input id="loginEmail" type="email" placeholder="Write your email">
+                </div>
+                <div class="loginPassword flexColumn">
+                    <h3>Password</h3>
+                    <div class="flexRow">
+                        <input id="loginPassword" type="password" placeholder="Write your password">
+                        <i class="icon fa-solid fa-eye " id="loginPasswordImg"></i>
+                    </div>
+                </div>
+                <button type="submit" id="logInBtn" class="submitBtn">Log in</button>
+                <p id="unknownEmail" class="hidden">Your email was using</p>
+                <a href="#" class="toSingInSection"><p id="toSingInSection">You already have an account</p></a>
+            </form>    
+        </section>
+        <section class="infoBar  flexRow">
+            <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
+            <div class="outPuts">
+                <h2 class="main-title">Welcome</h2>
+                <div class="flexRow">
+                    <h3>Your Name:</h3>
+                    <h3 class="userNameOutput"></h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Your Age:</h3>
+                    <h3 class="ageOutput"></h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Your Correct Answers:</h3>
+                    <h3 class="correctAnswersOutput">0</h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Your Wrong Answers:</h3>
+                    <h3 class="wrongAnswersOutput">0</h3>
+                </div>
+                <p class="hopeOrGreat"></p>  
+            </div>
+        </section>
+        <section class="calc flexRow">
+            <div class="calcInput">
+                <form>
+                    <textarea name="output" id="output" readonly ></textarea>
+                </form>
+                <div class="calcRow">
+                    <button id="cPlus" class="op">+</button>
+                    <button id="cMinus" class="op">-</button>
+                    <button id="cLesserThan" class="op">&#x3C</button>
+                    <button id="cGreaterThan" class="op">&#x3E</button>
+                </div>
+                <div class="calcRow">
+                    <button id="c1" class="num">1</button>
+                    <button id="c2" class="num">2</button>
+                    <button id="c3" class="num">3</button>
+                    <button id="cs"><i class="fa fa-check-circle" aria-hidden="true" id="submitImg"></i></button>
+                </div>
+                <div class="calcRow">
+                    <button id="c4" class="num">4</button>
+                    <button id="c5" class="num">5</button>
+                    <button id="c6" class="num">6</button>
+                    <button id="cObelus" class="op">÷</button>
+                </div>
+                <div class="calcRow">
+                    <button id="c7" class="num">7</button>
+                    <button id="c8" class="num">8</button>
+                    <button id="c9" class="num">9</button>
+                    <button id="cTimes" class="op">x</button>
+                </div>
+                <div class="calcRow">
+                    <button id="cAC">AC</button>
+                    <button id="c0" class="num">0</button>
+                    <button id="cDel">Del</button>
+                </div>
+            </div>
+            <div class="calcOutputs flexColumn">
+                <div class="flexRow">
+                    <h3>First Component:</h3>
+                    <h3 id="firstComponent"></h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Second Component:</h3>
+                    <h3 id="secondComponent"></h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Mathematics operation:</h3>
+                    <h3 id="operation"></h3>
+                </div>
+                <div class="flexRow">
+                    <h3>Result:</h3>
+                    <h3 id="result"></h3>
+                    <img id="resultImg" src="" alt="">
+                    <div id="trueAnswerIcon" class="hidden">
+                        <i class="fa fa-check-circle" aria-hidden="true" id="trueAnswer"></i>
+                    </div>
+                    <div id="falseAnswerIcon" class="hidden">
+                        <i class="fa fa-times-circle" aria-hidden="true" id="falseAnswer"></i>
+                    </div>
+                </div>
+                <div class="flexRow">
+                    <button id="hint" class="submitBtn">Hint</button>
+                    <button id="ex" class="submitBtn">The explanation</button>
+                </div>
+                <p id="hintDescription"></p>
+                <p id="exDescription"></p>
+            </div>
+        </section>
+        <section class="updateDataForm flexRow">
+            <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
+            <form class="flexColumn">
+                <h2 class="main-title">Update Data</h2>
+                <div class="flexRow form">
+                    <div class="lables flexColumn2">
+                        <h3>User name</h3>
+                        <h3>Age</h3>
+                        <h3>Choose theme</h3>
+                        <h3>Password</h3><br>
+                    </div>
+                    <div class="inputs flexColumn2">
+                        <input type="text" id="updateUserName">
+                        <div class="signAge">
+                            <input id="updateAge"  type="number" min="1" max="200">
+                        </div>
+                        <select name="updateTheme" id="updateSelectedTheme"></select>
+                        <div class="flexRow">
+                            <input type="password"id="updatePassword">
+                            <i class="icon fa-solid fa-eye " id="updatePasswordImg"></i>
+                        </div>
+                        <div class="flexRow">
+                            <input type="password"id="updatePasswordAgain">
+                            <i class="icon fa-solid fa-eye " id="updatePasswordAgainImg"></i>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="updateInBtn" class="submitBtn">Update Data</button>
+                <p id="emptyField" class="hidden">Your email was using</p>
+            </form>
+        </section>
+        <section class="themesSection flexColumn">
+            <div class="flexRow settingsTheme">
+                <button id="addDefaultThemes">Add Default Themes</button>
+                <button id="addNewTheme">Add New Theme</button>
+                <button id="reset">Reset</button>
+                <button id="deleteAll">Delete All</button>
+            </div>
+            <table id="themesTable"></table>
+        </section>
+        <section class="flexRow addAndUpdateSection">
+            <section id="demo" class="demoSection flexColumn">
+                <header id="headerDemo">
+                    <nav class="flexRow form">
+                        <h3>Kid Calc</h3>
+                        <button id="btnDemo" class="userNameOutput"></button>
+                    </nav>
+                </header>
+                <section id="bodyDemo" class="flexRow">
+                    <img src="/assets/images/pharaoh.png" alt="your img not found" id="imgDemo">
+                    <section class="flexColumn contentDemo">
+                        <div class="flexRow">
+                            <div>true</div>
+                            <i class="fa fa-check-circle" aria-hidden="true" id="demoTrue"></i>
+                        </div>
+                        <div class="flexRow">
+                            <div>false</div>
+                            <i class="fa fa-times-circle" aria-hidden="true" id="demoFalse"></i>
+                        </div>
+                        <div class="flexRow">
+                            <div>error</div>
+                            <div id="demoError">error</div>
+                        </div>
+                    </section>
+                </section>
+                <footer id="footerDemo">Kid Calc &#169; 2023</footer>
+            </section>
+            <section class="addThemeSection">
+                <form class="flexColumn">
+                    <h2 class="main-title">Add Theme</h2>
+                    <div class="flexRow form">
+                        <div class="lables flexColumn2">
+                            <h3>Theme Name</h3>
+                            <h3>Image URL</h3>
+                            <h3>Main Color</h3>
+                            <h3>Second Color</h3>
+                            <h3>Third Color</h3>
+                            <h3>Alert Color</h3>
+                            <h3>Success Color</h3>
+                        </div>
+                        <div class="inputs flexColumn2">
+                            <input type="text" id="ThemeName">
+                            <input type="text" id="ImgURL">
+                            <input type="color" name="Main" id="Main">
+                            <input type="color" name="Second" id="Second">
+                            <input type="color" name="Third" id="Third">
+                            <input type="color" name="Alert" id="Alert">
+                            <input type="color" name="Success" id="Success">
+                        </div>
+                    </div>
+                    <button type="submit" id="addThemeBtn" class="submitBtn">Add Theme</button>
+                    <p id="emptyFieldAddTheme" class="hidden">Your email was using</p>
+                </form>
+            </section>
+            <section class="UpdateThemeSection hidden">
+                <form class="flexColumn">
+                    <h2 class="main-title">Update Theme</h2>
+                    <div class="flexRow form">
+                        <div class="lables flexColumn2">
+                            <h3>Theme Name</h3>
+                            <h3>Image URL</h3>
+                            <h3>Main Color</h3>
+                            <h3>Second Color</h3>
+                            <h3>Third Color</h3>
+                            <h3>Alert Color</h3>
+                            <h3>Success Color</h3>
+                        </div>
+                        <div class="inputs flexColumn2">
+                            <input type="text" id="updateThemeName">
+                            <input type="text" id="updateImgURL">
+                            <input type="color" name="updateMain" id="updateMain">
+                            <input type="color" name="updateSecond" id="updateSecond">
+                            <input type="color" name="updateThird" id="updateThird">
+                            <input type="color" name="updateAlert" id="updateAlert">
+                            <input type="color" name="updateSuccess" id="updateSuccess">
+                        </div>
+                    </div>
+                    <button type="submit" id="updateThemeBtn" class="submitBtn">Update Theme</button>
+                    <p id="emptyFieldUpdateTheme" class="hidden">Your email was using</p>
+                </form>
+            </section>
+        </section>
+    </main>
+    <footer>Kid Calc &#169; 2023</footer>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
