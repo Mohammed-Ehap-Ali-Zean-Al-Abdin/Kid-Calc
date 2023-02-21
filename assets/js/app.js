@@ -1209,51 +1209,53 @@ function SignIn(){
         singPasswordAgainImgSlash.classList.add("hidden");
         singPasswordAgainImg.classList.remove("hidden");
     });
-    if(singPassword.value==singPasswordAgain.value){
-        if(signAge.value!="" && signEmail.value!="" && signAge.value!="" && singPassword.value!="" && singUserName.value!=""){
-            singInBtn.addEventListener("click",function(){
-                let user = {
-                    id:1,
-                    userName : singUserName.value.trim(),
-                    userPassword : singPassword.value.trim(),
-                    userAge : signAge.value.trim(),
-                    userEmail : signEmail.value.trim(),
-                    userFavoriteTheme : selectedTheme.value,
-                    userCorrectAnswers : 0,
-                    userWrongAnswers : 0,
-                    userThemes:[
-                                    {Name:"Pharaohs",MainColor:"#bd8f4d",SecondColor:"#000000",ThirdColor:"#ffffff",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/pharaoh.png"},
-                                    {Name:"Technology",MainColor:"#89d6fb",SecondColor:"#00303f",ThirdColor:"#d4f0fc",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/technology.png"},
-                                    {Name:"Space",MainColor:"#05377b",SecondColor:"#010b19",ThirdColor:"#89d6fb",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/space.png"},
-                                ]
-                };
-                if(localStorage.getItem("users")==null){
-                    localStorage.setItem("users",JSON.stringify([user]));
-                    localStorage.setItem("user",JSON.stringify(user));
-                    localStorage.setItem("userCorrectAnswers",user.userCorrectAnswers);
-                    localStorage.setItem("userWrongAnswers",user.userWrongAnswers);
-                    dataHandler(user);
-                }else{
-                    let usersOb = JSON.parse(localStorage.getItem("users"));
-                    if(usersOb.every((mail)=>{return mail.userEmail!=user.userEmail})){
-                        Object.defineProperty(user,'id',{value:`${Number(usersOb.length)+1}`});
-                        usersOb.push(user);
+    if(singPassword.value!=""){
+        if(singPassword.value==singPasswordAgain.value){
+            if(signAge.value!="" && signEmail.value!="" && signAge.value!="" && singPassword.value!="" && singUserName.value!=""){
+                singInBtn.addEventListener("click",function(){
+                    let user = {
+                        id:1,
+                        userName : singUserName.value.trim(),
+                        userPassword : singPassword.value.trim(),
+                        userAge : signAge.value.trim(),
+                        userEmail : signEmail.value.trim(),
+                        userFavoriteTheme : selectedTheme.value,
+                        userCorrectAnswers : 0,
+                        userWrongAnswers : 0,
+                        userThemes:[
+                                        {Name:"Pharaohs",MainColor:"#bd8f4d",SecondColor:"#000000",ThirdColor:"#ffffff",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/pharaoh.png"},
+                                        {Name:"Technology",MainColor:"#89d6fb",SecondColor:"#00303f",ThirdColor:"#d4f0fc",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/technology.png"},
+                                        {Name:"Space",MainColor:"#05377b",SecondColor:"#010b19",ThirdColor:"#89d6fb",AlertColor:"#ff0000",SuccessColor:"#0ee432",Image:"/assets/images/space.png"},
+                                    ]
+                    };
+                    if(localStorage.getItem("users")==null){
+                        localStorage.setItem("users",JSON.stringify([user]));
                         localStorage.setItem("user",JSON.stringify(user));
-                        localStorage.setItem("users",JSON.stringify(usersOb));
+                        localStorage.setItem("userCorrectAnswers",user.userCorrectAnswers);
+                        localStorage.setItem("userWrongAnswers",user.userWrongAnswers);
                         dataHandler(user);
                     }else{
-                        emailUsed.classList.remove("hidden");
-                        emailUsed.textContent="This email has already been used";
+                        let usersOb = JSON.parse(localStorage.getItem("users"));
+                        if(usersOb.every((mail)=>{return mail.userEmail!=user.userEmail})){
+                            Object.defineProperty(user,'id',{value:`${Number(usersOb.length)+1}`});
+                            usersOb.push(user);
+                            localStorage.setItem("user",JSON.stringify(user));
+                            localStorage.setItem("users",JSON.stringify(usersOb));
+                            dataHandler(user);
+                        }else{
+                            emailUsed.classList.remove("hidden");
+                            emailUsed.textContent="This email has already been used";
+                        };
                     };
-                };
-            });
+                });
+            }else{
+                emailUsed.classList.remove("hidden");
+                emailUsed.textContent="You should to complete all fields";
+            };
         }else{
             emailUsed.classList.remove("hidden");
-            emailUsed.textContent="You should to complete all fields";
+            emailUsed.textContent="Password Equation Error";
         };
-    }else{
-        emailUsed.classList.remove("hidden");
-        emailUsed.textContent="Password Equation Error";
     };
 };
 function LogIn(){
