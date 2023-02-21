@@ -15,10 +15,9 @@
         <h2 class="logo">Kid Calc</h2>
         <nav id="nav">
             <ul>
-                <li><a href="/assets/html/howToUse.html">How to use ?</a></li>
-                <li><button id="logout">Log out</button></li>
-                <li><button id="themeSettings"><i class="fa-solid fa-gear"></i>Themes</button></li>
-                <li><button class="userNameOutput" id="updateUserData"><i class="fa-solid fa-gear"></i></button></li>
+                <li><button id="logout" name="Log out">Log out</button></li>
+                <li><button id="themeSettings" name="theme Settings"><i class="fa-solid fa-gear"></i>Themes</button></li>
+                <li><button class="userNameOutput" name="update User Data" id="updateUserData"><i class="fa-solid fa-gear"></i></button></li>
             </ul>
         </nav>
     </header>
@@ -50,15 +49,25 @@
                         </select>
                         <div class="singPassword flexRow">
                             <input type="password"id="singPassword" name="userPassword" placeholder="Write strong password">
-                            <i class="icon fa-solid fa-eye" id="singPasswordImg"></i>
+                            <div id="singPasswordImg">
+                                <i class="icon fa-solid fa-eye"></i>
+                            </div>
+                            <div class="hidden" id="singPasswordImgSlash">
+                                <i class="icon fa-solid fa-eye-slash"></i>
+                            </div>
                         </div>
                         <div class="singPassword flexRow">
                             <input type="password"id="singPasswordAgain" placeholder="Write your password again">
-                            <i class="icon fa-solid fa-eye " id="singPasswordAgainImg"></i>
+                            <div id="singPasswordAgainImg">
+                                <i class="icon fa-solid fa-eye "></i>
+                            </div>
+                            <div class="hidden" id="singPasswordAgainImgSlash">
+                                <i class="icon fa-solid fa-eye-slash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button type="#" id="singInBtn" class="submitBtn">Sing in</button>
+                <button type="submit" id="singInBtn" name="Sing in" class="submitBtn">Sing in</button>
                 <p id="emailUsed" class="hidden">Your email was using</p>
                 <a href="#" class="toLoginSection"><p id="toLoginSection">If you already have an account</p></a>
             </form>
@@ -75,10 +84,15 @@
                     <h3>Password</h3>
                     <div class="flexRow">
                         <input id="loginPassword" type="password" placeholder="Write your password">
-                        <i class="icon fa-solid fa-eye " id="loginPasswordImg"></i>
+                        <div id="loginPasswordImg">
+                            <i class="icon fa-solid fa-eye"></i>
+                        </div>
+                        <div id="loginPasswordImgSlash" class="hidden">
+                            <i class="icon fa-solid fa-eye-slash"></i>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" id="logInBtn" class="submitBtn">Log in</button>
+                <button type="submit" id="logInBtn" name="Log in" class="submitBtn">Log in</button>
                 <p id="unknownEmail" class="hidden">Your email was using</p>
                 <a href="#" class="toSingInSection"><p id="toSingInSection">You already have an account</p></a>
             </form>    
@@ -109,36 +123,38 @@
         <section class="calc flexRow">
             <div class="calcInput">
                 <form>
-                    <textarea name="output" id="output" readonly ></textarea>
+                    <label for="output" class="hidden">Calc output</label>
+                    <textarea name="output" id="output" placeholder="Numbers and Operations" readonly ></textarea>
                 </form>
                 <div class="calcRow">
-                    <button id="cPlus" class="op">+</button>
-                    <button id="cMinus" class="op">-</button>
-                    <button id="cLesserThan" class="op">&#x3C</button>
-                    <button id="cGreaterThan" class="op">&#x3E</button>
+                    <button id="cPlus" name="cPlus" class="op">+</button>
+                    <button id="cMinus" name="cMinus" class="op">-</button>
+                    <button id="cLesserThan" name="cLesserThan" class="op">&#x3C</button>
+                    <button id="cGreaterThan" name="cGreaterThan" class="op">&#x3E</button>
                 </div>
                 <div class="calcRow">
-                    <button id="c1" class="num">1</button>
-                    <button id="c2" class="num">2</button>
-                    <button id="c3" class="num">3</button>
-                    <button id="cs"><i class="fa fa-check-circle" aria-hidden="true" id="submitImg"></i></button>
+                    <button id="c1" name="c1" class="num">1</button>
+                    <button id="c2" name="c2" class="num">2</button>
+                    <button id="c3" name="c3" class="num">3</button>
+                    <button id="cs" name="cSave"><i class="fa fa-check-circle" aria-hidden="true" id="submitImg"></i></button>
                 </div>
                 <div class="calcRow">
-                    <button id="c4" class="num">4</button>
-                    <button id="c5" class="num">5</button>
-                    <button id="c6" class="num">6</button>
-                    <button id="cObelus" class="op">÷</button>
+                    <button id="c4" name="c4" class="num">4</button>
+                    <button id="c5" name="c5" class="num">5</button>
+                    <button id="c6" name="c6" class="num">6</button>
+                    <button id="cObelus" name="cObelus" class="op">÷</button>
                 </div>
                 <div class="calcRow">
-                    <button id="c7" class="num">7</button>
-                    <button id="c8" class="num">8</button>
-                    <button id="c9" class="num">9</button>
-                    <button id="cTimes" class="op">x</button>
+                    <button id="c7" name="c7" class="num">7</button>
+                    <button id="c8" name="c8" class="num">8</button>
+                    <button id="c9" name="c9" class="num">9</button>
+                    <button id="cTimes" name="cTimes" class="op">x</button>
                 </div>
                 <div class="calcRow">
-                    <button id="cAC">AC</button>
-                    <button id="c0" class="num">0</button>
-                    <button id="cDel">Del</button>
+                    <button id="cAC" name="cAC">AC</button>
+                    <button id="c0" name="c0" class="num">0</button>
+                    <button id="cDel" name="cDel">Del</button>
+                    <button class="op" id="cE" name="cE">=</button>
                 </div>
             </div>
             <div class="calcOutputs flexColumn">
@@ -166,8 +182,8 @@
                     </div>
                 </div>
                 <div class="flexRow">
-                    <button id="hint" class="submitBtn">Hint</button>
-                    <button id="ex" class="submitBtn">The explanation</button>
+                    <button id="hint" class="submitBtn" name="hint">Hint</button>
+                    <button id="ex" class="submitBtn" name="explanation">The explanation</button>
                 </div>
                 <p id="hintDescription"></p>
                 <p id="exDescription"></p>
@@ -206,10 +222,10 @@
         </section>
         <section class="themesSection flexColumn">
             <div class="flexRow settingsTheme">
-                <button id="addDefaultThemes">Add Default Themes</button>
-                <button id="addNewTheme">Add New Theme</button>
-                <button id="reset">Reset</button>
-                <button id="deleteAll">Delete All</button>
+                <button id="addDefaultThemes" name="Add Default Themes">Add Default Themes</button>
+                <button id="addNewTheme" name="Add New Theme">Add New Theme</button>
+                <button id="reset" name="Reset">Reset</button>
+                <button id="deleteAll" name="Delete All">Delete All</button>
             </div>
             <table id="themesTable"></table>
         </section>
@@ -218,7 +234,7 @@
                 <header id="headerDemo">
                     <nav class="flexRow form">
                         <h3>Kid Calc</h3>
-                        <button id="btnDemo" class="userNameOutput"></button>
+                        <button id="btnDemo" class="userNameOutput" name="User Name"></button>
                     </nav>
                 </header>
                 <section id="bodyDemo" class="flexRow">
@@ -263,7 +279,7 @@
                             <input type="color" name="Success" id="Success">
                         </div>
                     </div>
-                    <button type="submit" id="addThemeBtn" class="submitBtn">Add Theme</button>
+                    <button type="submit" id="addThemeBtn" name="Add Theme" class="submitBtn">Add Theme</button>
                     <p id="emptyFieldAddTheme" class="hidden">Your email was using</p>
                 </form>
             </section>
@@ -290,7 +306,7 @@
                             <input type="color" name="updateSuccess" id="updateSuccess">
                         </div>
                     </div>
-                    <button type="submit" id="updateThemeBtn" class="submitBtn">Update Theme</button>
+                    <button type="submit" id="updateThemeBtn" name="Update Theme" class="submitBtn">Update Theme</button>
                     <p id="emptyFieldUpdateTheme" class="hidden">Your email was using</p>
                 </form>
             </section>

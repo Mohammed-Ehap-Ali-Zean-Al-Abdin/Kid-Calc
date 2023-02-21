@@ -68,6 +68,7 @@ button{
   border-radius: 5px;
   padding: 3px;
   border-color: var(--second-color);
+  cursor: pointer;
 }
 button:hover{
   color: var(--second-color);
@@ -95,6 +96,7 @@ select{
     margin-top: 2vh;
     font-size: 30px;
     color: var(--second-color);
+    cursor: pointer;
 }
 nav{
     grid-area: nav;
@@ -105,8 +107,6 @@ ul{
     width: 100%;
     display: flex;
     justify-content: flex-end;
-
-
 }
 ul li{
     display: inline-block;
@@ -246,6 +246,7 @@ ul li a {
   }
   .logImg1{
     height: 50vh;
+    max-width: 45vw;
     margin-top: 5vh;
   }
   .logImg2{
@@ -358,6 +359,7 @@ ul li a {
     color: var(--demo-th3-color);
     border-color: var(--demo-second-color);
     background-color: var(--demo-second-color);
+    cursor: pointer;
   }
   #demo button:hover{
     color: var(--demo-second-color);

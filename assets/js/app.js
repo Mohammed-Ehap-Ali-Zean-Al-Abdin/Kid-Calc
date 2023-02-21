@@ -9,6 +9,7 @@ let addThemeSection = document.querySelector(".addThemeSection");
 let UpdateThemeSection = document.querySelector(".UpdateThemeSection");
 let addAndUpdateSection = document.querySelector(".addAndUpdateSection");
 let demoSection = document.querySelector(".demoSection");
+let logo = document.querySelector(".logo");
 let toLoginSection = document.querySelector("#toLoginSection");
 let toSingInSection = document.querySelector("#toSingInSection");
 //Sing in variables
@@ -18,13 +19,17 @@ let signAge = document.querySelector("#signAge");
 let singPassword = document.querySelector("#singPassword");
 let singPasswordAgain = document.querySelector("#singPasswordAgain");
 let singPasswordImg = document.querySelector("#singPasswordImg");
+let singPasswordImgSlash = document.querySelector("#singPasswordImgSlash");
 let singPasswordAgainImg = document.querySelector("#singPasswordAgainImg");
+let singPasswordAgainImgSlash = document.querySelector("#singPasswordAgainImgSlash");
 let selectedTheme = document.querySelector("#selectedTheme");
 let emailUsed = document.querySelector("#emailUsed");
 let singInBtn = document.querySelector("#singInBtn");
 // login variables
 let loginEmail = document.querySelector("#loginEmail");
 let loginPassword = document.querySelector("#loginPassword");
+let loginPasswordImg = document.querySelector("#loginPasswordImg");
+let loginPasswordImgSlash = document.querySelector("#loginPasswordImgSlash");
 let unknownEmail = document.querySelector("#unknownEmail");
 let logInBtn = document.querySelector("#logInBtn");
 // Handler variables
@@ -56,6 +61,7 @@ let cTimes = document.querySelector("#cTimes");
 let cAC = document.querySelector("#cAC");
 let c0 = document.querySelector("#c0");
 let cDel = document.querySelector("#cDel");
+let cE = document.querySelector("#cE");
 let output = document.querySelector("#output");
 let firstComponent = document.querySelector("#firstComponent");
 let secondComponent = document.querySelector("#secondComponent");
@@ -113,6 +119,10 @@ let reset = document.querySelector("#reset");
 // Delete All Variable
 let deleteAll = document.querySelector("#deleteAll");
 // code :)
+// back home
+logo.addEventListener("click",()=>{
+    Check();
+});
 // Themes Settings
 themeSettings.addEventListener("click",()=>{
     themesSection.classList.remove("hidden");
@@ -226,28 +236,41 @@ themeSettings.addEventListener("click",()=>{
                     differentName = false;
                 };
             });
+            let themesListAfterRemoveItem = user.userThemes.filter((themeToRemove)=>{
+                if(themeToRemove.Name!=themeOb.Name){
+                    console.log(themeToRemove);
+                    return themeToRemove;
+                };
+            });
+            if(themesListAfterRemoveItem.every((TN)=>{return TN.Name!=updateThemeName.value})){
+                emptyFieldUpdateTheme.classList.add("hidden");
+                differentName = true;
+            }else{
+                emptyFieldUpdateTheme.textContent = "theme name used";
+                emptyFieldUpdateTheme.classList.remove("hidden");
+                differentName = false;
+            };
             updateImgURL.addEventListener("change",()=>{
-                imgDemo.setAttribute("src",updateImgURL.value);
+                imgDemo.setAttribute("src",updateImgURL.value.trim());
             });
             updateThemeBtn.addEventListener("click",()=>{
-                if(differentName&&ThemeName.value!=""){
-                    if(updateImgURL!=""){
-                        Object.defineProperty(themeOb,'Name',{value : `${updateThemeName.value.trim()}`});
-                        Object.defineProperty(themeOb,'MainColor',{value : `${updateMain.value}`});
-                        Object.defineProperty(themeOb,'SecondColor',{value : `${updateSecond.value}`});
-                        Object.defineProperty(themeOb,'ThirdColor',{value : `${updateThird.value}`});
-                        Object.defineProperty(themeOb,'AlertColor',{value : `${updateAlert.value}`});
-                        Object.defineProperty(themeOb,'SuccessColor',{value : `${updateSuccess.value}`});
-                        Object.defineProperty(themeOb,'Image',{value : `${updateImgURL.value}`});
-                        localStorage.setItem("user",JSON.stringify(user));
-                        usersOb.forEach((mail)=>{
-                            if(mail.userEmail==user.userEmail){
-                                Object.defineProperty(mail,'userThemes',{value : user.userThemes});
-                            }; 
-                        });
-                        localStorage.setItem("users",JSON.stringify(usersOb));
-                        Check();
-                    };
+                if(differentName&&updateThemeName.value!=""&&updateImgURL!=""){
+                    Object.defineProperty(themeOb,'Name',{value :updateThemeName.value.trim()});
+                    Object.defineProperty(themeOb,'MainColor',{value :updateMain.value});
+                    Object.defineProperty(themeOb,'SecondColor',{value :updateSecond.value});
+                    Object.defineProperty(themeOb,'ThirdColor',{value :updateThird.value});
+                    Object.defineProperty(themeOb,'AlertColor',{value :updateAlert.value});
+                    Object.defineProperty(themeOb,'SuccessColor',{value :updateSuccess.value});
+                    Object.defineProperty(themeOb,'Image',{value :updateImgURL.value.trim()});
+                    Object.defineProperty(user,'userThemes',{value :user.userThemes});
+                    localStorage.setItem("user",JSON.stringify(user));
+                    usersOb.forEach((mail)=>{
+                        if(mail.userEmail==user.userEmail){
+                            Object.defineProperty(mail,'userThemes',{value : user.userThemes});
+                        }; 
+                    });
+                    localStorage.setItem("users",JSON.stringify(usersOb));
+                    Check();
                 }else{
                     emptyFieldUpdateTheme.textContent = "theme name used you can't update";
                     emptyFieldUpdateTheme.classList.remove("hidden");
@@ -349,15 +372,14 @@ themeSettings.addEventListener("click",()=>{
             if(differentName&&ThemeName.value!=""){
                 if(ImgURL!=" "){
                     let newThemeOb = {
-                        Name: ThemeName.value,
+                        Name: ThemeName.value.trim(),
                         MainColor: Main.value,
                         SecondColor: Second.value,
                         ThirdColor: Third.value,
                         AlertColor: Alert.value,
                         SuccessColor: Success.value,
-                        Image: ImgURL.value
-                    };
-                    
+                        Image: ImgURL.value.trim()
+                    }; 
                     if(user.userThemes.length==0){
                         Object.defineProperty(user,'userThemes',{value : [newThemeOb]});
                     }else if(user.userThemes.length>0){
@@ -511,147 +533,121 @@ updateUserData.addEventListener("click",()=>{
     });
 });
 // Calc
-c0.addEventListener("click",()=>{
-    output.textContent = output.textContent+0;
-});
-c1.addEventListener("click",()=>{
-    output.textContent = output.textContent+1;
-});
-c2.addEventListener("click",()=>{
-    output.textContent = output.textContent+2;
-});
-c3.addEventListener("click",()=>{
-    output.textContent = output.textContent+3;
-});
-c4.addEventListener("click",()=>{
-    output.textContent = output.textContent+4;
-});
-c5.addEventListener("click",()=>{
-    output.textContent = output.textContent+5;
-});
-c6.addEventListener("click",()=>{
-    output.textContent = output.textContent+6;
-});
-c7.addEventListener("click",()=>{
-    output.textContent = output.textContent+7;
-});
-c8.addEventListener("click",()=>{
-    output.textContent = output.textContent+8;
-});
-c9.addEventListener("click",()=>{
-    output.textContent = output.textContent+9;
-});
-cPlus.addEventListener("click",()=>{
-    output.textContent = "+";
-});
-cMinus.addEventListener("click",()=>{
-    output.textContent = "-";
-});
-cObelus.addEventListener("click",()=>{
-    output.textContent = `÷`;
-});
-cTimes.addEventListener("click",()=>{
-    output.textContent = `x`;
-});
-cLesserThan.addEventListener("click",()=>{
-    output.textContent = `<`;
-});
-cGreaterThan.addEventListener("click",()=>{
-    output.textContent = `>`;
-});
-cAC.addEventListener("click",()=>{
-    output.textContent = ""
-});
-cDel.addEventListener("click",()=>{
-    output.textContent = output.value.slice(0, -1);
-}); 
-hint.addEventListener("click",()=>{
-    localStorage.setItem("hint","true");
-    hintDescription.classList.remove("hidden");
-});
-if(localStorage.getItem("hint")=="false"){
-    hintDescription.classList.add("hidden");
-};
-if(localStorage.getItem("hint")!=" "){
-
-}else{
-    localStorage.setItem("hint","false");
-};
-ex.addEventListener("click",()=>{
-    localStorage.setItem("ex","true");
-    exDescription.classList.remove("hidden");
-});
-if(localStorage.getItem("ex")=="false"){
-    exDescription.classList.add("hidden");
-};
-if(localStorage.getItem("ex")!=" "){
-
-}else{
-    localStorage.setItem("ex","false");
-};
-localStorage.setItem("firstComponent", " ");
-localStorage.setItem("secondComponent", " ");
-localStorage.setItem("operation", " ");
-localStorage.setItem("userResult", " ");
-localStorage.setItem("ex","false");
-localStorage.setItem("hint","false");
-function addAndRemoveClassHidden(numOrOp){
-    if(numOrOp=="num"){
-        op[0].classList.add("hidden");
-        op[1].classList.add("hidden");
-        op[2].classList.add("hidden");
-        op[3].classList.add("hidden");
-        op[4].classList.add("hidden");
-        op[5].classList.add("hidden");
-        num[0].classList.remove("hidden");
-        num[1].classList.remove("hidden");
-        num[2].classList.remove("hidden");
-        num[3].classList.remove("hidden");
-        num[4].classList.remove("hidden");
-        num[5].classList.remove("hidden");
-        num[6].classList.remove("hidden");
-        num[7].classList.remove("hidden");
-        num[8].classList.remove("hidden");
-        num[9].classList.remove("hidden");
-    }else if(numOrOp=="op"){
-        op[0].classList.remove("hidden");
-        op[1].classList.remove("hidden");
-        op[2].classList.remove("hidden");
-        op[3].classList.remove("hidden");
-        op[4].classList.remove("hidden");
-        op[5].classList.remove("hidden");
-        num[0].classList.add("hidden");
-        num[1].classList.add("hidden");
-        num[2].classList.add("hidden");
-        num[3].classList.add("hidden");
-        num[4].classList.add("hidden");
-        num[5].classList.add("hidden");
-        num[6].classList.add("hidden");
-        num[7].classList.add("hidden");
-        num[8].classList.add("hidden");
-        num[9].classList.add("hidden");
+function Calc(){
+    c0.addEventListener("click",()=>{
+        output.textContent = output.textContent+0;
+    });
+    c1.addEventListener("click",()=>{
+        output.textContent = output.textContent+1;
+    });
+    c2.addEventListener("click",()=>{
+        output.textContent = output.textContent+2;
+    });
+    c3.addEventListener("click",()=>{
+        output.textContent = output.textContent+3;
+    });
+    c4.addEventListener("click",()=>{
+        output.textContent = output.textContent+4;
+    });
+    c5.addEventListener("click",()=>{
+        output.textContent = output.textContent+5;
+    });
+    c6.addEventListener("click",()=>{
+        output.textContent = output.textContent+6;
+    });
+    c7.addEventListener("click",()=>{
+        output.textContent = output.textContent+7;
+    });
+    c8.addEventListener("click",()=>{
+        output.textContent = output.textContent+8;
+    });
+    c9.addEventListener("click",()=>{
+        output.textContent = output.textContent+9;
+    });
+    cPlus.addEventListener("click",()=>{
+        output.textContent = "+";
+    });
+    cMinus.addEventListener("click",()=>{
+        output.textContent = "-";
+    });
+    cObelus.addEventListener("click",()=>{
+        output.textContent = `÷`;
+    });
+    cTimes.addEventListener("click",()=>{
+        output.textContent = `x`;
+    });
+    cLesserThan.addEventListener("click",()=>{
+        output.textContent = `<`;
+    });
+    cGreaterThan.addEventListener("click",()=>{
+        output.textContent = `>`;
+    });
+    cAC.addEventListener("click",()=>{
+        output.textContent = ""
+    });
+    cDel.addEventListener("click",()=>{
+        output.textContent = output.value.slice(0, -1);
+    });
+    cE.addEventListener("click",()=>{
+        output.textContent = "=";
+    }); 
+    hint.addEventListener("click",()=>{
+        localStorage.setItem("hint","true");
+        hintDescription.classList.remove("hidden");
+    });
+    if(localStorage.getItem("hint")=="false"){
+        hintDescription.classList.add("hidden");
     };
-};
-cs.addEventListener("click",()=>{
-    if (localStorage.getItem("firstComponent")==" "){
-        firstComponent.textContent = "";
-        secondComponent.textContent = "";
-        operation.textContent = "";
-        trueAnswerIcon.classList.add("hidden");
-        falseAnswerIcon.classList.add("hidden");
-        result.textContent = "";
-        localStorage.setItem("firstComponent",output.textContent);
-        firstComponent.textContent= output.textContent;
-        output.textContent = " ";
-    }else  if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")==" "){
-        localStorage.setItem("secondComponent",output.textContent);
-        secondComponent.textContent= output.textContent;
-        if (output.textContent=="0") {
+    if(localStorage.getItem("hint")!=" "){
+    
+    }else{
+        localStorage.setItem("hint","false");
+    };
+    ex.addEventListener("click",()=>{
+        localStorage.setItem("ex","true");
+        exDescription.classList.remove("hidden");
+    });
+    if(localStorage.getItem("ex")=="false"){
+        exDescription.classList.add("hidden");
+    };
+    if(localStorage.getItem("ex")!=" "){
+    
+    }else{
+        localStorage.setItem("ex","false");
+    };
+    localStorage.setItem("firstComponent", " ");
+    localStorage.setItem("secondComponent", " ");
+    localStorage.setItem("operation", " ");
+    localStorage.setItem("userResult", " ");
+    localStorage.setItem("ex","false");
+    localStorage.setItem("hint","false");
+    function addAndRemoveClassHidden(numOrOp){
+        if(numOrOp=="num"){
+            op[0].classList.add("hidden");
+            op[1].classList.add("hidden");
+            op[2].classList.add("hidden");
+            op[3].classList.add("hidden");
+            op[4].classList.add("hidden");
+            op[5].classList.add("hidden");
+            op[6].classList.add("hidden");
+            num[0].classList.remove("hidden");
+            num[1].classList.remove("hidden");
+            num[2].classList.remove("hidden");
+            num[3].classList.remove("hidden");
+            num[4].classList.remove("hidden");
+            num[5].classList.remove("hidden");
+            num[6].classList.remove("hidden");
+            num[7].classList.remove("hidden");
+            num[8].classList.remove("hidden");
+            num[9].classList.remove("hidden");
+        }else if(numOrOp=="op"){
             op[0].classList.remove("hidden");
             op[1].classList.remove("hidden");
             op[2].classList.remove("hidden");
             op[3].classList.remove("hidden");
+            op[4].classList.remove("hidden");
             op[5].classList.remove("hidden");
+            op[6].classList.remove("hidden");
             num[0].classList.add("hidden");
             num[1].classList.add("hidden");
             num[2].classList.add("hidden");
@@ -662,378 +658,482 @@ cs.addEventListener("click",()=>{
             num[7].classList.add("hidden");
             num[8].classList.add("hidden");
             num[9].classList.add("hidden");
-        }else{
-            addAndRemoveClassHidden("op");
         };
-        output.textContent = " ";
-    }else if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")!=" "&&localStorage.getItem("operation")==" "){
-        localStorage.setItem("operation",output.textContent);
-        operation.textContent=output.textContent;
-            if(localStorage.getItem("operation")=="<"){
-                hintDescription.textContent = "1<2";
-                if(localStorage.getItem("firstComponent")<localStorage.getItem("secondComponent")){
-                    result.textContent = "true";
-                    trueAnswerIcon.classList.remove("hidden");
-                    if (localStorage.getItem("hint")=="true") {
-                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1;
-                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
-                        HopeOrGreat();
-                        localStorage.setItem("firstComponent", " ");
-                        localStorage.setItem("secondComponent", " ");
-                        localStorage.setItem("operation", " ");
-                        localStorage.setItem("hint","false");
-                        localStorage.setItem("ex","false");
-                    }else {
-                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
-                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
-                        HopeOrGreat();
-                        localStorage.setItem("firstComponent", " ");
-                        localStorage.setItem("secondComponent", " ");
-                        localStorage.setItem("operation", " ");
-                        localStorage.setItem("ex","false");
+    };
+    cs.addEventListener("click",()=>{
+        if (localStorage.getItem("firstComponent")==" "){
+            localStorage.setItem("hint","false");
+            localStorage.setItem("ex","false");
+            if(localStorage.getItem("hint")=="false"){
+                hintDescription.classList.add("hidden");
+            };
+            if(localStorage.getItem("ex")=="false"){
+                exDescription.classList.add("hidden");
+            };
+            firstComponent.textContent = "";
+            secondComponent.textContent = "";
+            operation.textContent = "";
+            trueAnswerIcon.classList.add("hidden");
+            falseAnswerIcon.classList.add("hidden");
+            result.textContent = "";
+            localStorage.setItem("firstComponent",output.textContent);
+            firstComponent.textContent= output.textContent;
+            output.textContent = " ";
+        }else  if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")==" "){
+            localStorage.setItem("secondComponent",output.textContent);
+            secondComponent.textContent= output.textContent;
+            if (output.textContent=="0") {
+                op[0].classList.remove("hidden");
+                op[1].classList.remove("hidden");
+                op[2].classList.remove("hidden");
+                op[3].classList.remove("hidden");
+                op[5].classList.remove("hidden");
+                op[6].classList.remove("hidden");
+                num[0].classList.add("hidden");
+                num[1].classList.add("hidden");
+                num[2].classList.add("hidden");
+                num[3].classList.add("hidden");
+                num[4].classList.add("hidden");
+                num[5].classList.add("hidden");
+                num[6].classList.add("hidden");
+                num[7].classList.add("hidden");
+                num[8].classList.add("hidden");
+                num[9].classList.add("hidden");
+            }else{
+                addAndRemoveClassHidden("op");
+            };
+            output.textContent = " ";
+        }else if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")!=" "&&localStorage.getItem("operation")==" "){
+            localStorage.setItem("operation",output.textContent);
+            operation.textContent=output.textContent;
+            let trueOperation;
+            if(Number(localStorage.getItem("firstComponent"))<Number(localStorage.getItem("secondComponent"))){
+                trueOperation="<";
+            }else if(Number(localStorage.getItem("firstComponent"))>Number(localStorage.getItem("secondComponent"))){
+                trueOperation=">";
+            }else if(Number(localStorage.getItem("firstComponent"))==Number(localStorage.getItem("secondComponent"))){
+                trueOperation="=";
+            }; 
+                if(localStorage.getItem("operation")=="<"){
+                    hintDescription.textContent = "1<2";
+                    if(Number(localStorage.getItem("firstComponent"))<Number(localStorage.getItem("secondComponent"))){
+                        result.textContent = "true";
+                        trueAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                        }else {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("ex","false");
+                        };
+                    }else{
+                        result.textContent = "false";
+                        falseAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                        }else {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("ex","false");
+                        };
                     };
-                }else{
-                    result.textContent = "false";
-                    falseAnswerIcon.classList.remove("hidden");
-                    if (localStorage.getItem("hint")=="true") {
-                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} > ${localStorage.getItem("secondComponent")}`;
-                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
-                        HopeOrGreat();
-                        localStorage.setItem("firstComponent", " ");
-                        localStorage.setItem("secondComponent", " ");
-                        localStorage.setItem("operation", " ");
-                        localStorage.setItem("hint","false");
-                        localStorage.setItem("ex","false");
-                    }else {
-                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} > ${localStorage.getItem("secondComponent")}`;
-                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
-                        HopeOrGreat();
-                        localStorage.setItem("firstComponent", " ");
-                        localStorage.setItem("secondComponent", " ");
-                        localStorage.setItem("operation", " ");
-                        localStorage.setItem("ex","false");
+                }else if(localStorage.getItem("operation")==">"){
+                    hintDescription.textContent = "2>1";
+                    if(Number(localStorage.getItem("firstComponent"))>Number(localStorage.getItem("secondComponent"))){
+                        result.textContent = "true";
+                        trueAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        }else {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        };
+                    }else{
+                        result.textContent = "false";
+                        falseAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        }else {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        };
                     };
-                };
-            }else if(localStorage.getItem("operation")==">"){
-                hintDescription.textContent = "2>1";
-                if(localStorage.getItem("firstComponent")>localStorage.getItem("secondComponent")){
+                }else if(localStorage.getItem("operation")=="="){
+                    hintDescription.textContent = "1=1";
+                    if(Number(localStorage.getItem("firstComponent"))==Number(localStorage.getItem("secondComponent"))){
+                        result.textContent = "true";
+                        trueAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        }else {
+                            correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        };
+                    }else{
+                        result.textContent = "false";
+                        falseAnswerIcon.classList.remove("hidden");
+                        if (localStorage.getItem("hint")=="true") {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        }else {
+                            wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                            localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                            HopeOrGreat();
+                            localStorage.setItem("firstComponent", " ");
+                            localStorage.setItem("secondComponent", " ");
+                            localStorage.setItem("operation", " ");
+                            localStorage.setItem("hint","false");
+                            localStorage.setItem("ex","false");
+                            addAndRemoveClassHidden("num");
+                        };
+                    };
+                }
+            output.textContent = " ";
+            addAndRemoveClassHidden("num");
+            let user = JSON.parse(localStorage.getItem("user"));
+            let usersOb = JSON.parse(localStorage.getItem("users"));
+            usersOb.forEach((mail)=>{
+                if(mail.userEmail==user.userEmail){
+                    Object.defineProperty(mail,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
+                    Object.defineProperty(mail,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`});
+                }; 
+            });
+            Object.defineProperty(user,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
+            Object.defineProperty(user,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`})
+            localStorage.setItem("users",JSON.stringify(usersOb));
+            localStorage.setItem("user",JSON.stringify(user));
+        }else if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")!=" "&&localStorage.getItem("operation")!=" "){
+            localStorage.setItem("userResult",output.textContent);
+            if(localStorage.getItem("operation")=="+"){
+                hintDescription.textContent = "1+2=3";
+                if(Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
                     result.textContent = "true";
                     trueAnswerIcon.classList.remove("hidden");
                     if (localStorage.getItem("hint")=="true") {
                         correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} > ${localStorage.getItem("secondComponent")}`;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
                         localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
                         HopeOrGreat();
                         localStorage.setItem("firstComponent", " ");
                         localStorage.setItem("secondComponent", " ");
                         localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
                         localStorage.setItem("hint","false");
                         localStorage.setItem("ex","false");
                         addAndRemoveClassHidden("num");
                     }else {
                         correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} > ${localStorage.getItem("secondComponent")}`;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
                         localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
                         HopeOrGreat();
                         localStorage.setItem("firstComponent", " ");
                         localStorage.setItem("secondComponent", " ");
                         localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
                         localStorage.setItem("ex","false");
                         addAndRemoveClassHidden("num");
-                    };
-                }else{
+                    }
+                }else {
                     result.textContent = "false";
                     falseAnswerIcon.classList.remove("hidden");
                     if (localStorage.getItem("hint")=="true") {
                         wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))}`;
                         localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
                         HopeOrGreat();
                         localStorage.setItem("firstComponent", " ");
                         localStorage.setItem("secondComponent", " ");
                         localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
                         localStorage.setItem("hint","false");
                         localStorage.setItem("ex","false");
                         addAndRemoveClassHidden("num");
                     }else {
                         wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                        exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))}`;
                         localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
                         HopeOrGreat();
                         localStorage.setItem("firstComponent", " ");
                         localStorage.setItem("secondComponent", " ");
                         localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }
+            }else if(localStorage.getItem("operation")=="-"){
+                hintDescription.textContent = "3-2=1";
+                if(Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
+                    result.textContent = "true";
+                    trueAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
                         localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }else {
+                    result.textContent = "false";
+                    falseAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }
+            }else if(localStorage.getItem("operation")=="x"){
+                hintDescription.textContent = "2x3=6=2+2+2";
+                if(Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
+                    result.textContent = "true";
+                    trueAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }else {
+                    result.textContent = "false";
+                    falseAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }
+            }else if(localStorage.getItem("operation")=="÷"){
+                hintDescription.textContent = "6÷3=2";
+                if(Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
+                    result.textContent = "true";
+                    trueAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
+                        localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }
+                }else {
+                    result.textContent = "false";
+                    falseAnswerIcon.classList.remove("hidden");
+                    if (localStorage.getItem("hint")=="true") {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
+                        localStorage.setItem("hint","false");
+                        localStorage.setItem("ex","false");
+                        addAndRemoveClassHidden("num");
+                    }else {
+                        wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
+                        exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))}`;
+                        localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
+                        HopeOrGreat();
+                        localStorage.setItem("firstComponent", " ");
+                        localStorage.setItem("secondComponent", " ");
+                        localStorage.setItem("operation", " ");
+                        localStorage.setItem("userResult", " ");
                         localStorage.setItem("ex","false");
                         addAndRemoveClassHidden("num");
                     };
                 };
             };
-        output.textContent = " ";
-        addAndRemoveClassHidden("num");
-        let user = JSON.parse(localStorage.getItem("user"));
-        let usersOb = JSON.parse(localStorage.getItem("users"));
-        usersOb.forEach((mail)=>{
-            if(mail.userEmail==user.userEmail){
-                Object.defineProperty(mail,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
-                Object.defineProperty(mail,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`});
-            }; 
-        });
-        Object.defineProperty(user,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
-        Object.defineProperty(user,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`})
-        localStorage.setItem("users",JSON.stringify(usersOb));
-        localStorage.setItem("user",JSON.stringify(user));
-    }else if (localStorage.getItem("firstComponent")!=" "&&localStorage.getItem("secondComponent")!=" "&&localStorage.getItem("operation")!=" "){
-        localStorage.setItem("userResult",output.textContent);
-        if(localStorage.getItem("operation")=="+"){
-            hintDescription.textContent = "1+2=3";
-            if(Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
-                result.textContent = "true";
-                trueAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }else {
-                result.textContent = "false";
-                falseAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} + ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))+Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }
-        }else if(localStorage.getItem("operation")=="-"){
-            hintDescription.textContent = "3-2=1";
-            if(Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
-                result.textContent = "true";
-                trueAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }else {
-                result.textContent = "false";
-                falseAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} - ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))-Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }
-        }else if(localStorage.getItem("operation")=="x"){
-            hintDescription.textContent = "2x3=6=2+2+2";
-            if(Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
-                result.textContent = "true";
-                trueAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }else {
-                result.textContent = "false";
-                falseAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} x ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))*Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }
-        }else if(localStorage.getItem("operation")=="÷"){
-            hintDescription.textContent = "6÷3=2";
-            if(Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))==localStorage.getItem("userResult")){
-                result.textContent = "true";
-                trueAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+1
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    correctAnswersOutput.textContent = Number(correctAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${localStorage.getItem("userResult")}`;
-                    localStorage.setItem("userCorrectAnswers",Number(localStorage.getItem("userCorrectAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }
-            }else {
-                result.textContent = "false";
-                falseAnswerIcon.classList.remove("hidden");
-                if (localStorage.getItem("hint")=="true") {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("hint","false");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                }else {
-                    wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                    exDescription.textContent = `${localStorage.getItem("firstComponent")} ÷ ${localStorage.getItem("secondComponent")} = ${Number(localStorage.getItem("firstComponent"))/Number(localStorage.getItem("secondComponent"))}`;
-                    localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
-                    HopeOrGreat();
-                    localStorage.setItem("firstComponent", " ");
-                    localStorage.setItem("secondComponent", " ");
-                    localStorage.setItem("operation", " ");
-                    localStorage.setItem("userResult", " ");
-                    localStorage.setItem("ex","false");
-                    addAndRemoveClassHidden("num");
-                };
-            };
+            output.textContent = " ";
+            let user = JSON.parse(localStorage.getItem("user"));
+            let usersOb = JSON.parse(localStorage.getItem("users"));
+            usersOb.forEach((mail)=>{
+                if(mail.userEmail==user.userEmail){
+                    Object.defineProperty(mail,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
+                    Object.defineProperty(mail,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`});
+                }; 
+            });
+            Object.defineProperty(user,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
+            Object.defineProperty(user,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`})
+            localStorage.setItem("users",JSON.stringify(usersOb));
+            localStorage.setItem("user",JSON.stringify(user));
         };
-        output.textContent = " ";
-        let user = JSON.parse(localStorage.getItem("user"));
-        let usersOb = JSON.parse(localStorage.getItem("users"));
-        usersOb.forEach((mail)=>{
-            if(mail.userEmail==user.userEmail){
-                Object.defineProperty(mail,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
-                Object.defineProperty(mail,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`});
-            }; 
-        });
-        Object.defineProperty(user,'userCorrectAnswers',{value : `${localStorage.getItem("userCorrectAnswers")}`});
-        Object.defineProperty(user,'userWrongAnswers',{value : `${localStorage.getItem("userWrongAnswers")}`})
-        localStorage.setItem("users",JSON.stringify(usersOb));
-        localStorage.setItem("user",JSON.stringify(user));
-    };
-});
+    });
+};
 function Check(){
     if(localStorage.getItem("login")=="true"){
         signInSection.classList.add("hidden");
@@ -1052,6 +1152,7 @@ function Check(){
         op[3].classList.add("hidden");
         op[4].classList.add("hidden");
         op[5].classList.add("hidden");
+        op[6].classList.add("hidden");
         dataHandler(JSON.parse(localStorage.getItem("user")));
     }else{
         nav.classList.add("hidden");
@@ -1088,8 +1189,28 @@ toLoginSection.addEventListener("click",()=>{
     Check();
 });
 function SignIn(){
+    singPasswordImg.addEventListener("click",function(){
+        singPassword.setAttribute("type","text");
+        singPasswordImg.classList.add("hidden");
+        singPasswordImgSlash.classList.remove("hidden");
+    });
+    singPasswordImgSlash.addEventListener("click",function(){
+        singPassword.setAttribute("type","password");
+        singPasswordImgSlash.classList.add("hidden");
+        singPasswordImg.classList.remove("hidden");
+    });
+    singPasswordAgainImg.addEventListener("click",function(){
+        singPasswordAgain.setAttribute("type","text");
+        singPasswordAgainImg.classList.add("hidden");
+        singPasswordAgainImgSlash.classList.remove("hidden");
+    });
+    singPasswordAgainImgSlash.addEventListener("click",function(){
+        singPasswordAgain.setAttribute("type","password");
+        singPasswordAgainImgSlash.classList.add("hidden");
+        singPasswordAgainImg.classList.remove("hidden");
+    });
     if(singPassword.value==singPasswordAgain.value){
-        if(signAge.value!=" " && signEmail.value!=" " && signAge.value!=" " && singPassword.value!=" " && singUserName.value!=" "){
+        if(signAge.value!="" && signEmail.value!="" && signAge.value!="" && singPassword.value!="" && singUserName.value!=""){
             singInBtn.addEventListener("click",function(){
                 let user = {
                     id:1,
@@ -1136,7 +1257,17 @@ function SignIn(){
     };
 };
 function LogIn(){
-    if(loginEmail.value!=" " && loginPassword.value!=" "){
+    loginPasswordImg.addEventListener("click",function(){
+        loginPassword.setAttribute("type","text");
+        loginPasswordImg.classList.add("hidden");
+        loginPasswordImgSlash.classList.remove("hidden");
+    });
+    loginPasswordImgSlash.addEventListener("click",function(){
+        loginPassword.setAttribute("type","password");
+        loginPasswordImgSlash.classList.add("hidden");
+        loginPasswordImg.classList.remove("hidden");
+    });
+    if(loginEmail.value!="" && loginPassword.value!=""){
         logInBtn.addEventListener("click",function(){
             let ob = {userEmail:loginEmail.value.trim(),userPassword:loginPassword.value.trim()};
             let usersOb = JSON.parse(localStorage.getItem("users"));
@@ -1237,6 +1368,7 @@ function dataHandler(user){
             }
         });
     };
+    Calc();
     HopeOrGreat();
 };
 function HopeOrGreat(){
