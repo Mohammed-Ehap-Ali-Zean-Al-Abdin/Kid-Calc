@@ -1209,10 +1209,10 @@ function SignIn(){
         singPasswordAgainImgSlash.classList.add("hidden");
         singPasswordAgainImg.classList.remove("hidden");
     });
-    if(singPassword.value!=""){
-        if(singPassword.value==singPasswordAgain.value){
-            if(signAge.value!="" && signEmail.value!="" && signAge.value!="" && singPassword.value!="" && singUserName.value!=""){
-                singInBtn.addEventListener("click",function(){
+    singInBtn.addEventListener("click",function(){
+        if(singPassword.value!=""){
+            if(singPassword.value==singPasswordAgain.value){
+                if(signAge.value!="" && signEmail.value!="" && signAge.value!="" && singPassword.value!="" && singUserName.value!=""){ 
                     let user = {
                         id:1,
                         userName : singUserName.value.trim(),
@@ -1247,16 +1247,17 @@ function SignIn(){
                             emailUsed.textContent="This email has already been used";
                         };
                     };
-                });
+    
+                }else{
+                    emailUsed.classList.remove("hidden");
+                    emailUsed.textContent="You should to complete all fields";
+                };
             }else{
                 emailUsed.classList.remove("hidden");
-                emailUsed.textContent="You should to complete all fields";
+                emailUsed.textContent="Password Equation Error";
             };
-        }else{
-            emailUsed.classList.remove("hidden");
-            emailUsed.textContent="Password Equation Error";
         };
-    };
+    });
 };
 function LogIn(){
     loginPasswordImg.addEventListener("click",function(){
@@ -1269,8 +1270,8 @@ function LogIn(){
         loginPasswordImgSlash.classList.add("hidden");
         loginPasswordImg.classList.remove("hidden");
     });
-    if(loginEmail.value!="" && loginPassword.value!=""){
-        logInBtn.addEventListener("click",function(){
+    logInBtn.addEventListener("click",function(){
+        if(loginEmail.value!="" && loginPassword.value!=""){
             let ob = {userEmail:loginEmail.value.trim(),userPassword:loginPassword.value.trim()};
             let usersOb = JSON.parse(localStorage.getItem("users"));
             if(localStorage.getItem("users")==null){
@@ -1293,13 +1294,12 @@ function LogIn(){
                         unknownEmail.textContent="Your email isn't Correct";
                     };
                 });
-            };
-        });
-        
-    }else{
-        unknownEmail.classList.remove("hidden");
-        unknownEmail.textContent="You should to complete all fields";
-    };
+            }; 
+        }else{
+            unknownEmail.classList.remove("hidden");
+            unknownEmail.textContent="You should to complete all fields";
+        };
+    });
 };
 function dataHandler(user){
     signInSection.classList.add("hidden");
