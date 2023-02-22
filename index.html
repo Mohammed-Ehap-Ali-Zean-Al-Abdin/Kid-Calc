@@ -20,8 +20,21 @@
                 <li><button class="userNameOutput" name="update User Data" id="updateUserData"><i class="fa-solid fa-gear"></i></button></li>
             </ul>
         </nav>
+        <div id="barIconDiv" class="hidden">
+            <i class="fa-solid fa-bars" id="barIcon"></i>
+        </div>
+        <div id="barIconDivClicked" class="hidden">
+            <i class="fa-solid fa-bars" id="barIconClicked"></i>
+        </div>
     </header>
     <main>
+        <section id="barSection" class="flexRow hidden">
+            <ul>
+                <li><button class="userNameOutput" id="updateUserDataBar"></button></li>
+                <li><button id="themeSettingsBar"><i class="fa-solid fa-gear"></i>Themes</button></li>
+                <li><button id="logoutBar">Log out</button></li>
+            </ul>
+        </section>
         <section class="singIn flexRow">
             <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
             <form class="signInForm flexColumn">
@@ -97,17 +110,13 @@
                 <a href="#" class="toSingInSection"><p id="toSingInSection">You already have an account</p></a>
             </form>    
         </section>
-        <section class="infoBar  flexRow">
+        <section class="infoBar  flexRow2">
             <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
-            <div class="outPuts">
+            <div class="outPuts flexColumn">
                 <h2 class="main-title">Welcome</h2>
                 <div class="flexRow">
                     <h3>Your Name:</h3>
                     <h3 class="userNameOutput"></h3>
-                </div>
-                <div class="flexRow">
-                    <h3>Your Age:</h3>
-                    <h3 class="ageOutput"></h3>
                 </div>
                 <div class="flexRow">
                     <h3>Your Correct Answers:</h3>
@@ -117,40 +126,44 @@
                     <h3>Your Wrong Answers:</h3>
                     <h3 class="wrongAnswersOutput">0</h3>
                 </div>
-                <p class="hopeOrGreat"></p>  
+                <div class="flexRow">
+                    <h3>Your Age:</h3>
+                    <h3 class="ageOutput"></h3>
+                </div>
+                <p class="flexRow hopeOrGreat"></p>  
             </div>
         </section>
-        <section class="calc flexRow">
-            <div class="calcInput">
-                <form>
+        <section class="calc flexRow2">
+            <div class="calcInput flexColumn">
+                <form class="flexRow">
                     <label for="output" class="hidden">Calc output</label>
                     <textarea name="output" id="output" placeholder="Numbers and Operations" readonly ></textarea>
                 </form>
-                <div class="calcRow">
+                <div class="flexRow">
                     <button id="cPlus" name="cPlus" class="op">+</button>
                     <button id="cMinus" name="cMinus" class="op">-</button>
                     <button id="cLesserThan" name="cLesserThan" class="op">&#x3C</button>
                     <button id="cGreaterThan" name="cGreaterThan" class="op">&#x3E</button>
                 </div>
-                <div class="calcRow">
+                <div class="flexRow">
                     <button id="c1" name="c1" class="num">1</button>
                     <button id="c2" name="c2" class="num">2</button>
                     <button id="c3" name="c3" class="num">3</button>
                     <button id="cs" name="cSave"><i class="fa fa-check-circle" aria-hidden="true" id="submitImg"></i></button>
                 </div>
-                <div class="calcRow">
+                <div class="flexRow">
                     <button id="c4" name="c4" class="num">4</button>
                     <button id="c5" name="c5" class="num">5</button>
                     <button id="c6" name="c6" class="num">6</button>
                     <button id="cObelus" name="cObelus" class="op">÷</button>
                 </div>
-                <div class="calcRow">
+                <div class="flexRow">
                     <button id="c7" name="c7" class="num">7</button>
                     <button id="c8" name="c8" class="num">8</button>
                     <button id="c9" name="c9" class="num">9</button>
                     <button id="cTimes" name="cTimes" class="op">x</button>
                 </div>
-                <div class="calcRow">
+                <div class="flexRow">
                     <button id="cAC" name="cAC">AC</button>
                     <button id="c0" name="c0" class="num">0</button>
                     <button id="cDel" name="cDel">Del</button>
@@ -189,7 +202,7 @@
                 <p id="exDescription"></p>
             </div>
         </section>
-        <section class="updateDataForm flexRow">
+        <section class="updateDataForm flexRow2">
             <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
             <form class="flexColumn">
                 <h2 class="main-title">Update Data</h2>
@@ -229,7 +242,7 @@
             </div>
             <table id="themesTable"></table>
         </section>
-        <section class="flexRow addAndUpdateSection">
+        <section class="flexRow2 addAndUpdateSection">
             <section id="demo" class="demoSection flexColumn">
                 <header id="headerDemo">
                     <nav class="flexRow form">
