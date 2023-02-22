@@ -437,6 +437,10 @@ ul li a {
     justify-content: space-around;
     margin: auto;
   }
+  .flexRow3{
+    display: flex;
+    flex-direction: row;
+  }
   .hidden{
     display: none;
   }
