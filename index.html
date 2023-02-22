@@ -35,7 +35,7 @@
                 <li><button id="logoutBar">Log out</button></li>
             </ul>
         </section>
-        <section class="singIn flexRow">
+        <section class="singIn flexRow2">
             <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
             <form class="signInForm flexColumn">
                 <h2 class="main-title">Sign in</h2>
@@ -85,7 +85,7 @@
                 <a href="#" class="toLoginSection"><p id="toLoginSection">If you already have an account</p></a>
             </form>
         </section>
-        <section class="logIn flexRow">
+        <section class="logIn flexRow2">
             <img src="/assets/images/pharaoh.png" alt="pharaohs" class="logImg1">
             <form class="logInForm flexColumn">
                 <h2 class="main-title">Log in</h2>
@@ -221,11 +221,21 @@
                         <select name="updateTheme" id="updateSelectedTheme"></select>
                         <div class="flexRow">
                             <input type="password"id="updatePassword">
-                            <i class="icon fa-solid fa-eye " id="updatePasswordImg"></i>
+                            <div id="updatePasswordImg">
+                                <i class="icon fa-solid fa-eye"></i>
+                            </div>
+                            <div id="updatePasswordImgSlash" class="hidden">
+                                <i class="icon fa-solid fa-eye-slash"></i>
+                            </div>
                         </div>
                         <div class="flexRow">
                             <input type="password"id="updatePasswordAgain">
-                            <i class="icon fa-solid fa-eye " id="updatePasswordAgainImg"></i>
+                            <div id="updatePasswordAgainImg">
+                                <i class="icon fa-solid fa-eye"></i>
+                            </div>
+                            <div id="updatePasswordAgainImgSlash" class="hidden">
+                                <i class="icon fa-solid fa-eye-slash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

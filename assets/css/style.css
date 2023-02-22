@@ -34,6 +34,7 @@ main{
 }
 table{
   min-width: 50vw;
+  max-width: 90vw;
   margin: auto;
   margin-top: 3vh;
   border-spacing: 0.5vw;

@@ -82,6 +82,10 @@ let updateAge = document.querySelector("#updateAge");
 let updateSelectedTheme = document.querySelector("#updateSelectedTheme");
 let updatePassword = document.querySelector("#updatePassword");
 let updatePasswordAgain = document.querySelector("#updatePasswordAgain");
+let updatePasswordImg = document.querySelector("#updatePasswordImg");
+let updatePasswordAgainImg = document.querySelector("#updatePasswordAgainImg");
+let updatePasswordImgSlash = document.querySelector("#updatePasswordImgSlash");
+let updatePasswordAgainImgSlash = document.querySelector("#updatePasswordAgainImgSlash");
 let emptyField = document.querySelector("#emptyField");
 let updateInBtn = document.querySelector("#updateInBtn");
 // log out variable
@@ -125,6 +129,8 @@ let barSection = document.querySelector("#barSection");
 let updateUserDataBar = document.querySelector("#updateUserDataBar");
 let themeSettingsBar = document.querySelector("#themeSettingsBar");
 let logoutBar = document.querySelector("#logoutBar");
+// footer Variable
+let footer = document.querySelectorAll("footer");
 // code :)
 // Header Settings
 function HeaderSettings(){
@@ -529,6 +535,26 @@ function HeaderSettings(){
     });
     // Update Data
     function UpdateUserData(){
+        updatePasswordImg.addEventListener("click",function(){
+            updatePassword.setAttribute("type","text");
+            updatePasswordImg.classList.add("hidden");
+            updatePasswordImgSlash.classList.remove("hidden");
+        });
+        updatePasswordImgSlash.addEventListener("click",function(){
+            updatePassword.setAttribute("type","password");
+            updatePasswordImgSlash.classList.add("hidden");
+            updatePasswordImg.classList.remove("hidden");
+        });
+        updatePasswordAgainImg.addEventListener("click",function(){
+            updatePassword.setAttribute("type","text");
+            updatePasswordAgainImg.classList.add("hidden");
+            updatePasswordAgainImgSlash.classList.remove("hidden");
+        });
+        updatePasswordAgainImgSlash.addEventListener("click",function(){
+            updatePassword.setAttribute("type","password");
+            updatePasswordAgainImgSlash.classList.add("hidden");
+            updatePasswordAgainImg.classList.remove("hidden");
+        });
         updateSection.classList.remove("hidden");
         addAndUpdateSection.classList.add("hidden");
         themesSection.classList.add("hidden");
@@ -641,7 +667,7 @@ function Calc(){
         output.textContent = `>`;
     });
     cAC.addEventListener("click",()=>{
-        output.textContent = ""
+        output.textContent = "";
     });
     cDel.addEventListener("click",()=>{
         output.textContent = output.value.slice(0, -1);
@@ -656,7 +682,7 @@ function Calc(){
     if(localStorage.getItem("hint")=="false"){
         hintDescription.classList.add("hidden");
     };
-    if(localStorage.getItem("hint")!=" "){
+    if(localStorage.getItem("hint")!=""){
     
     }else{
         localStorage.setItem("hint","false");
@@ -668,7 +694,7 @@ function Calc(){
     if(localStorage.getItem("ex")=="false"){
         exDescription.classList.add("hidden");
     };
-    if(localStorage.getItem("ex")!=" "){
+    if(localStorage.getItem("ex")!=""){
     
     }else{
         localStorage.setItem("ex","false");
@@ -907,7 +933,7 @@ function Calc(){
                         falseAnswerIcon.classList.remove("hidden");
                         if (localStorage.getItem("hint")=="true") {
                             wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+2;
-                            exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
                             localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+2);
                             HopeOrGreat();
                             localStorage.setItem("firstComponent", " ");
@@ -918,7 +944,7 @@ function Calc(){
                             addAndRemoveClassHidden("num");
                         }else {
                             wrongAnswersOutput.textContent = Number(wrongAnswersOutput.textContent)+1;
-                            exDescription.textContent = `${localStorage.getItem("firstComponent")} < ${localStorage.getItem("secondComponent")}`;
+                            exDescription.textContent = `${localStorage.getItem("firstComponent")} ${trueOperation} ${localStorage.getItem("secondComponent")}`;
                             localStorage.setItem("userWrongAnswers",Number(localStorage.getItem("userWrongAnswers"))+1);
                             HopeOrGreat();
                             localStorage.setItem("firstComponent", " ");
@@ -1193,6 +1219,11 @@ function Calc(){
     });
 };
 function Check(){
+    // footer
+    let dateNow = new Date();
+    footer[0].textContent = `Kid Calc © ${dateNow.getFullYear()}`;
+    footer[1].textContent = `Kid Calc © ${dateNow.getFullYear()}`;
+    // login or not
     if(localStorage.getItem("login")=="true"){
         signInSection.classList.add("hidden");
         logInSection.classList.add("hidden");
@@ -1235,7 +1266,7 @@ function Check(){
             LogIn();
         };
     };
-};
+}; 
 toSingInSection.addEventListener("click",()=>{
     localStorage.setItem("toSingIn","true");
     localStorage.setItem("toLogIn","false");
@@ -1246,6 +1277,7 @@ toLoginSection.addEventListener("click",()=>{
     localStorage.setItem("toSingIn","false");
     Check();
 });
+// sing in
 function SignIn(){
     singPasswordImg.addEventListener("click",function(){
         singPassword.setAttribute("type","text");
@@ -1317,6 +1349,7 @@ function SignIn(){
         };
     });
 };
+// login
 function LogIn(){
     loginPasswordImg.addEventListener("click",function(){
         loginPassword.setAttribute("type","text");
@@ -1359,6 +1392,7 @@ function LogIn(){
         };
     });
 };
+// handel data
 function dataHandler(user){
     signInSection.classList.add("hidden");
     logInSection.classList.add("hidden");
@@ -1429,6 +1463,7 @@ function dataHandler(user){
             }
         });
     };
+    // this for who min the screen in pc or laptop or for some one test my code 😁
     if(document.defaultView.innerWidth<=630){
         barIconDiv.classList.remove("hidden");
         barSection.classList.add("hidden");
