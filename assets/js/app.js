@@ -562,6 +562,7 @@ function HeaderSettings(){
         calcSection.classList.add("hidden");
         emptyField.classList.add("hidden");
         let user = JSON.parse(localStorage.getItem("user"));
+        updateSelectedTheme.innerHTML="";
         user.userThemes.forEach((theme)=>{
             updateSelectedTheme.innerHTML = `${updateSelectedTheme.innerHTML}<option value="${theme.Name}">${theme.Name}</option>`
         });
