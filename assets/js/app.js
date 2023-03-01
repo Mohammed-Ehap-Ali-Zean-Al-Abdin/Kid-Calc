@@ -1224,7 +1224,6 @@ function Check(){
     let dateNow = new Date();
     footer[0].textContent = `Kid Calc © ${dateNow.getFullYear()}`;
     footer[1].textContent = `Kid Calc © ${dateNow.getFullYear()}`;
-    // login or not
     if(localStorage.getItem("login")=="true"){
         signInSection.classList.add("hidden");
         logInSection.classList.add("hidden");
